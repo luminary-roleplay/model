@@ -9,7 +9,7 @@ A standalone, modular data-model library for FiveM/RedM. It provides a structure
 | Requirement | Required |
 |---|---|
 | `ox_lib` | Yes |
-| `oxmysql` | Must be running when using the `db` feature |
+| `lm_postgres` | Must be running when using the `db` feature (the `db` module talks to `Postgres.*`/`exports.lm_postgres`, not `oxmysql`) |
 
 ## Installation
 
@@ -161,6 +161,8 @@ local vehicles = ClientModel.connect({ model = 'vehicles' })
 - [Client Model](docs/client-model.md) — `ClientModel.connect`, mirroring, client requests
 - [Remote Model](docs/remote-model.md) — Server-to-server proxy and mirror via `RemoteModel.connect`
 - [Client State](docs/client-state.md) — Pure client-side local state (no server involvement)
+- **Examples**
+  - [DB-persisted, live-synced zones](docs/examples/zones.md) — full worked example combining `db` + `sync` + `client_requests` + `hooks`
 - **Features**
   - [db](docs/features/db.md)
   - [sync](docs/features/sync.md)

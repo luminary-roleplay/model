@@ -42,6 +42,10 @@ Use:
 Use:
 - no features, or just `sync` if you only need live propagation
 
+## Full worked example
+
+- [DB-persisted, live-synced zones](examples/zones.md) — combines `db`, `sync`, `client_requests`, and `hooks` for a real server-authoritative-area feature, with a working copy of the resource in this project.
+
 ## Notes
 
 - Features are opt-in via `config.features` when creating the store.
