@@ -2,7 +2,7 @@
 ---@field definition RegisteredModelDefinition
 ---@field config table
 ---@field recordClass table
-local ClientModelConnection = lib.class('ClientModelConnection', require('@lm_model.shared.base_container'))
+local ClientModelConnection = lib.class('ClientModelConnection', require('@model.shared.base_container'))
 
 local ClientModel = {}
 
@@ -15,7 +15,7 @@ function ClientModelConnection:constructor(definition, config)
     self.config = config
     self.recordClass = (config.features.remote and config.features.remote.recordClass)
         or (config.features.mirror and config.features.mirror.recordClass)
-        or require('@lm_model.client.record')
+        or require('@model.client.record')
 
     self:_setup(config.features)
 end
@@ -64,7 +64,7 @@ end
 
 --- Reload full snapshot using paged loading to avoid large single-transfer payloads.
 --- Requires the store owner to have registered a paged callback at '{eventName}:getPage'
---- via exports.lm_model:registerPagedCallback(...). Each item returned by the paged
+--- via exports.model:registerPagedCallback(...). Each item returned by the paged
 --- callback must embed the primary key under the field named by `options.primaryKey`
 --- (defaults to 'id').
 ---@param options {pageSize?: integer, primaryKey?: string, callbackName?: string}?
@@ -77,7 +77,7 @@ function ClientModelConnection:resyncPaged(options)
     local primaryKey = opts.primaryKey or 'id'
     local pageSize = opts.pageSize or 150
 
-    local Paging = require('@lm_model.client.paging')
+    local Paging = require('@model.client.paging')
     local items, usedPaging = Paging.loadPagedDataset(callbackName, pageSize)
 
     if not usedPaging or not items then
@@ -168,7 +168,7 @@ function ClientModel.connect(config)
     assert(type(config) == 'table', 'config must be a table')
     assert(type(config.model) == 'string', 'config.model is required')
 
-    local definition = lib.callback.await('lm_model:getModelDefinition', false, config.model)
+    local definition = lib.callback.await('model:getModelDefinition', false, config.model)
     if not definition then
         error(('model "%s" is not registered'):format(config.model), 2)
     end

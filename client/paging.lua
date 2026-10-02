@@ -1,7 +1,7 @@
 --- Client-side paged dataset loader for large model data sets.
 ---
 --- Usage (in a consuming resource):
----   local Paging = require('@lm_model.client.paging')
+---   local Paging = require('@model.client.paging')
 ---   local items, usedPaging, total = Paging.loadPagedDataset('vehicles:getPage', 150, function(item, index)
 ---       return item
 ---   end)

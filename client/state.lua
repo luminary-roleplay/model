@@ -1,16 +1,16 @@
-local SharedUtils = require('@lm_model.shared.utils')
+local SharedUtils = require('@model.shared.utils')
 
 ---@class ClientStateOwner: SharedBaseContainer
 ---@field eventName string
 ---@field ownerResource string
 ---@field recordClass table
-local ClientStateOwner = lib.class('ClientStateOwner', require('@lm_model.shared.base_container'))
+local ClientStateOwner = lib.class('ClientStateOwner', require('@model.shared.base_container'))
 
 ---@class ClientStateMirror: SharedBaseContainer
 ---@field eventName string
 ---@field ownerResource string
 ---@field recordClass table
-local ClientStateMirror = lib.class('ClientStateMirror', require('@lm_model.shared.base_container'))
+local ClientStateMirror = lib.class('ClientStateMirror', require('@model.shared.base_container'))
 
 local ClientState = {}
 local currentResource = GetCurrentResourceName()
@@ -27,7 +27,7 @@ function ClientStateOwner:constructor(config)
 
     self.eventName = config.eventName
     self.ownerResource = currentResource
-    self.recordClass = config.recordClass or require('@lm_model.client.state_record')
+    self.recordClass = config.recordClass or require('@model.client.state_record')
 
     AddEventHandler(('%s:requestSync'):format(localEvent(self.eventName)), function(targetResource)
         if targetResource ~= self.ownerResource then
@@ -82,7 +82,7 @@ function ClientStateMirror:constructor(config)
 
     self.ownerResource = config.resource
     self.eventName = config.eventName
-    self.recordClass = config.recordClass or require('@lm_model.client.state_record')
+    self.recordClass = config.recordClass or require('@model.client.state_record')
 
     if config.autoLoad ~= false then
         self:resync()

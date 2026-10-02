@@ -87,7 +87,7 @@ exports('listModels', function()
 end)
 
 --- Allow clients to fetch a model definition via callback.
-lib.callback.register('lm_model:getModelDefinition', function(source, name)
+lib.callback.register('model:getModelDefinition', function(source, name)
     return models[name]
 end)
 
@@ -101,4 +101,4 @@ AddEventHandler('onResourceStop', function(resourceName)
 end)
 
 -- Check for updates
-lib.versionCheck('luminary-roleplay/lm_model')
+lib.versionCheck('luminary-roleplay/model')

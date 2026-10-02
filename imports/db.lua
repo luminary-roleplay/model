@@ -49,30 +49,30 @@ local function loadQuery(resourceName, path)
     return query
 end
 
-local declaredLMPOSTGRESDependency = hasDependency(currentResource, 'lm_postgres')
-local lm_postgresState = GetResourceState('lm_postgres')
+local declaredLMPOSTGRESDependency = hasDependency(currentResource, 'postgres')
+local postgresState = GetResourceState('postgres')
 
--- Fail early if lm_postgres is unavailable.
-if lm_postgresState ~= 'started' then
+-- Fail early if postgres is unavailable.
+if postgresState ~= 'started' then
     if declaredLMPOSTGRESDependency then
         error(
-            ("Resource '%s' loaded lm_model DB module and declares dependency 'lm_postgres', but lm_postgres is not started. " ..
-            "Make sure 'ensure lm_postgres' is above '%s'."):format(currentResource, currentResource),
+            ("Resource '%s' loaded model DB module and declares dependency 'postgres', but postgres is not started. " ..
+            "Make sure 'ensure postgres' is above '%s'."):format(currentResource, currentResource),
             2
         )
     end
 
     error(
-        ("Resource '%s' loaded lm_model DB module, but lm_postgres is not started. " ..
-        "Start lm_postgres first or remove the DB feature/module from this resource."):format(currentResource),
+        ("Resource '%s' loaded model DB module, but postgres is not started. " ..
+        "Start postgres first or remove the DB feature/module from this resource."):format(currentResource),
         2
     )
 end
 
 -- Warn when falling back to exports.
 if not declaredLMPOSTGRESDependency then
-    print(("[lm_model] Resource '%s' loaded the DB module without declaring dependency 'lm_postgres'. " ..
-        "Falling back to exports.lm_postgres. Consider adding `dependency 'lm_postgres'` to the resource manifest.")
+    print(("[model] Resource '%s' loaded the DB module without declaring dependency 'postgres'. " ..
+        "Falling back to exports.postgres. Consider adding `dependency 'postgres'` to the resource manifest.")
         :format(currentResource))
 end
 
@@ -90,7 +90,7 @@ function Db.query(query, params)
         return Postgres.query.await(query, params or {})
     end
 
-    return exports.lm_postgres:query_async(query, params or {})
+    return exports.postgres:query_async(query, params or {})
 end
 
 ---@param query string
@@ -101,7 +101,7 @@ function Db.single(query, params)
         return Postgres.single.await(query, params or {})
     end
 
-    return exports.lm_postgres:single_async(query, params or {})
+    return exports.postgres:single_async(query, params or {})
 end
 
 ---@param query string
@@ -112,7 +112,7 @@ function Db.scalar(query, params)
         return Postgres.scalar.await(query, params or {})
     end
 
-    return exports.lm_postgres:scalar_async(query, params or {})
+    return exports.postgres:scalar_async(query, params or {})
 end
 
 ---@param query string
@@ -123,7 +123,7 @@ function Db.insert(query, params)
         return Postgres.insert.await(query, params or {})
     end
 
-    return exports.lm_postgres:insert_async(query, params or {})
+    return exports.postgres:insert_async(query, params or {})
 end
 
 ---@param query string
@@ -134,7 +134,7 @@ function Db.update(query, params)
         return Postgres.update.await(query, params or {}) or 0
     end
 
-    return exports.lm_postgres:update_async(query, params or {}) or 0
+    return exports.postgres:update_async(query, params or {}) or 0
 end
 
 ---@param query string
@@ -145,7 +145,7 @@ function Db.execute(query, params)
         return Postgres.rawExecute.await(query, params or {}) or 0
     end
 
-    return exports.lm_postgres:execute_async(query, params or {}) or 0
+    return exports.postgres:execute_async(query, params or {}) or 0
 end
 
 ---@param queries table
@@ -156,7 +156,7 @@ function Db.transaction(queries, params)
         return Postgres.transaction.await(queries, params or {})
     end
 
-    return exports.lm_postgres:transaction_async(queries, params or {})
+    return exports.postgres:transaction_async(queries, params or {})
 end
 
 ---@param query string
@@ -167,7 +167,7 @@ function Db.prepare(query, params)
         return Postgres.prepare.await(query, params or {})
     end
 
-    return exports.lm_postgres:prepare_async(query, params or {})
+    return exports.postgres:prepare_async(query, params or {})
 end
 
 ---@param path string

@@ -1,6 +1,6 @@
 # Example: a requireable per-resource model library (zones)
 
-A complete example of building a small **library on top of `lm_model`** — not a single resource that owns data, but a `require`-able factory that any resource calls to get its *own* independent store. This is the same shape `lm_model` itself uses (`Model.register`), one layer up: instead of every feature hand-rolling `db`+`sync`+`client_requests`+`hooks` wiring from scratch, they call one function with a name and a permission filter.
+A complete example of building a small **library on top of `model`** — not a single resource that owns data, but a `require`-able factory that any resource calls to get its *own* independent store. This is the same shape `model` itself uses (`Model.register`), one layer up: instead of every feature hand-rolling `db`+`sync`+`client_requests`+`hooks` wiring from scratch, they call one function with a name and a permission filter.
 
 A working copy of this lives in this project at `resources/[lib]/zones` — read this page alongside that library's code (`server/zones.lua`, `client/zones.lua`, `client/admin.lua`, `shared/validate.lua`).
 
@@ -22,7 +22,7 @@ local Zones = require('@zones.server.zones')
 local RestrictedZones = Zones.register({ name = 'restricted_zones', permission = { headadmin = 0 } })
 ```
 
-Each call to `register()` produces its own `lm_model` `BaseStore`, its own Postgres table, its own sync event namespace — they don't share data or collide, the same way two different resources calling `Model.register({ name = 'vehicles' })` and `Model.register({ name = 'houses' })` don't collide.
+Each call to `register()` produces its own `model` `BaseStore`, its own Postgres table, its own sync event namespace — they don't share data or collide, the same way two different resources calling `Model.register({ name = 'vehicles' })` and `Model.register({ name = 'houses' })` don't collide.
 
 ---
 
@@ -36,14 +36,14 @@ The first version of this example was a single `zones` *resource* that owned one
 
 A `require`-based library avoids all of that: `Zones.register(config)` runs *inside the calling resource's own Lua environment* (that's what FXv2 OAL's cross-resource `require('@other.path')` actually does — it loads and executes the file's code as part of the caller, not as a call into a separate process). So `GetCurrentResourceName()`, `exports(...)`, and file loads inside the library all resolve to the *calling* resource, not to `zones` itself. Concretely:
 
-- `Model.register({ name = 'banking_zones', ... })` called from inside `require('@zones.server.zones')` registers `banking_zones` with `owner = 'banking'` in `lm_model`'s registry — not `owner = 'zones'`.
+- `Model.register({ name = 'banking_zones', ... })` called from inside `require('@zones.server.zones')` registers `banking_zones` with `owner = 'banking'` in `model`'s registry — not `owner = 'zones'`.
 - If you called `exports('foo', fn)` from inside a required library module, it would register `foo` as an export of the *calling* resource, not the library.
 
-This is exactly how `lm_model` itself is meant to be consumed — `zones` is just one more layer of the same idea.
+This is exactly how `model` itself is meant to be consumed — `zones` is just one more layer of the same idea.
 
 ---
 
-## Why the library doesn't use `lm_model`'s `db` feature
+## Why the library doesn't use `model`'s `db` feature
 
 The `db` feature ([docs](../features/db.md)) is file-path based: `selectAll = 'queries/vehicles/select_all.sql'` etc., loaded via `LoadResourceFile`. But because of the require-executes-in-the-caller behavior above, those file paths would be resolved against *whichever resource called `register()`* — meaning every consumer (`banking`, `restricted-areas`, ...) would need to carry its own copy of near-identical SQL files, just with a different table name hardcoded inside them. That defeats the point of a thin library.
 
@@ -79,7 +79,7 @@ for _, row in ipairs(Db.query(selectAllSql)) do
 end
 ```
 
-This directly pokes `store.records`/`store.recordClass` from outside the class — which looks unusual, but it's exactly what `lm_model`'s own `db` feature does internally (see `imports/features/db.lua`'s `dbLoad`). Any external module holding a `BaseStore` instance can do the same; `lib.class` instances don't restrict field access to methods defined on the class itself.
+This directly pokes `store.records`/`store.recordClass` from outside the class — which looks unusual, but it's exactly what `model`'s own `db` feature does internally (see `imports/features/db.lua`'s `dbLoad`). Any external module holding a `BaseStore` instance can do the same; `lib.class` instances don't restrict field access to methods defined on the class itself.
 
 **Tradeoff, stated plainly:** no dirty-batching. Every `setData`/`setDataMany` call writes the full row immediately instead of queuing and flushing on a timer, because there's no `db` feature attached to do that queuing. Fine at admin-edit frequency (this is for zones an admin places, not high-frequency player state); don't reuse this specific persistence approach for something that changes many times per second.
 
@@ -116,9 +116,9 @@ The ordering is the whole point: **validate and let every hook have veto power b
 
 **`banking/fxmanifest.lua`**
 ```lua
-dependencies { 'ox_lib', 'utils', 'core', 'lm_model', 'lm_postgres', 'zones' }
+dependencies { 'ox_lib', 'utils', 'core', 'model', 'postgres', 'zones' }
 shared_scripts { '@ox_lib/init.lua', '@utils/init.lua', '@core/imports/import.lua' }
-server_scripts { '@lm_postgres/lib/Postgres.lua' }
+server_scripts { '@postgres/lib/Postgres.lua' }
 ```
 
 **`banking/server/main.lua`**

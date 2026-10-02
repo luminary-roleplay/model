@@ -1,6 +1,6 @@
-local Proxy = require('@lm_model.imports.proxy')
+local Proxy = require('@model.imports.proxy')
 
-local modelResource = 'lm_model'
+local modelResource = 'model'
 local currentResource = GetCurrentResourceName()
 
 ---@class RemoteConnection: SharedBaseContainer
@@ -8,7 +8,7 @@ local currentResource = GetCurrentResourceName()
 ---@field config table
 ---@field proxy StoreProxy|nil
 ---@field recordClass table|nil
-local RemoteConnection = lib.class('RemoteConnection', require('@lm_model.shared.base_container'))
+local RemoteConnection = lib.class('RemoteConnection', require('@model.shared.base_container'))
 
 local RemoteModel = {}
 

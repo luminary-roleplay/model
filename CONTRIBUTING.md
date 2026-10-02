@@ -1,4 +1,4 @@
-# Contributing to lm_model
+# Contributing to model
 
 Thank you for taking the time to contribute. This document covers everything you need to know before opening an issue or pull request.
 
@@ -45,10 +45,10 @@ Open an issue describing:
 
 1. Clone or copy the resource into your FiveM/RedM server's resource folder:
    ```
-   resources/[lib]/lm_model/
+   resources/[lib]/model/
    ```
 
-2. Add `ensure lm_model` to your `server.cfg` **before** any resource that depends on it.
+2. Add `ensure model` to your `server.cfg` **before** any resource that depends on it.
 
 3. There is no offline unit-test harness — all testing is done end-to-end against a running `cfx-server`. Create a small test resource that exercises the change and verify behaviour in-game or via server console output.
 
@@ -63,7 +63,7 @@ Open an issue describing:
 | Classes and module tables | `PascalCase` |
 | Private fields / methods | Prefix with `_` (e.g. `_applyDiff`, `_setupMirror`) |
 | Module return | Every file returns a single table or class |
-| Requires | Always use `require('@lm_model.path.to.module')` — no relative paths |
+| Requires | Always use `require('@model.path.to.module')` — no relative paths |
 | Globals | **Never.** All state must be local to the module |
 | Comments | Only where the logic is non-obvious; don't restate what the code says |
 
@@ -90,7 +90,7 @@ A feature file:
 
 ### Server exports vs client callbacks
 
-Server-side exports (`exports('name', fn)`) are **not** accessible from client scripts. Any data a client needs from the lm_model registry must come through a `lib.callback`. Do not add server exports expecting them to work client-side.
+Server-side exports (`exports('name', fn)`) are **not** accessible from client scripts. Any data a client needs from the model registry must come through a `lib.callback`. Do not add server exports expecting them to work client-side.
 
 ### Sync is push-only, diffs only
 
@@ -117,7 +117,7 @@ The `client_requests` and `subscriptions` features accept net events from client
 
 ## Acknowledgements
 
-lm_model is built on top of **ox_lib**, without which the class system, callback layer, and a significant amount of the ergonomics here would not exist.
+model is built on top of **ox_lib**, without which the class system, callback layer, and a significant amount of the ergonomics here would not exist.
 
 - Original library by [Overextended](https://github.com/overextended/ox_lib) — the foundation everything is built on.
 - Active community fork maintained by [CommunityOx](https://github.com/CommunityOx/ox_lib) — **this is the recommended version to use.** It continues to receive updates and community-driven improvements.

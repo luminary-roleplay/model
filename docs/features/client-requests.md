@@ -111,7 +111,7 @@ Rate limit state is cleaned up automatically when a player disconnects (`playerD
 
 ```lua
 -- client/my_script.lua
-local ClientModel = require('@lm_model.client.model')
+local ClientModel = require('@model.client.model')
 
 local vehicles = ClientModel.connect({ model = 'vehicles' })
 

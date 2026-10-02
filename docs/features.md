@@ -1,6 +1,6 @@
 # Features Overview
 
-This page gives a quick summary of each lm_model feature and when to use it.
+This page gives a quick summary of each model feature and when to use it.
 
 ## At a glance
 

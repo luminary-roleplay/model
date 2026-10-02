@@ -1,11 +1,11 @@
 --- Paging utilities for large model data sets.
---- Auto-loaded as part of lm_model's server scripts.
+--- Auto-loaded as part of model's server scripts.
 ---
 --- Store-owner resources register paged callbacks via the exported helper:
----   exports.lm_model:registerPagedCallback('vehicles:getPage', { ... })
+---   exports.model:registerPagedCallback('vehicles:getPage', { ... })
 ---
 --- This lets clients call the callback page-by-page using ClientModelConnection:resyncPaged()
---- or the standalone client paging loader in @lm_model.client.paging.
+--- or the standalone client paging loader in @model.client.paging.
 
 ---@generic TInput, TOutput
 ---@class LmModelPagedCallbackOptions<TInput, TOutput>

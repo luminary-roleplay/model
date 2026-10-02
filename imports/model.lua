@@ -1,6 +1,6 @@
-local SharedUtils = require('@lm_model.shared.utils')
+local SharedUtils = require('@model.shared.utils')
 
-local modelResource = 'lm_model'
+local modelResource = 'model'
 local currentResource = GetCurrentResourceName()
 
 ---@class ModelRecord: SharedBaseRecord
@@ -9,7 +9,7 @@ local currentResource = GetCurrentResourceName()
 ---@field version number
 ---@field _dirty boolean
 ---@field _dirtyFields table<string, boolean>
-local Record = lib.class('ModelRecord', require('@lm_model.shared.base_record'))
+local Record = lib.class('ModelRecord', require('@model.shared.base_record'))
 
 ---@class BaseStoreConfig
 ---@field name string
@@ -36,7 +36,7 @@ local Record = lib.class('ModelRecord', require('@lm_model.shared.base_record'))
 ---@field dirtyOrder any[]
 ---@field featureState table<string, any>
 ---@field hooks table<string, function>
-local BaseStore = lib.class('BaseStore', require('@lm_model.shared.base_container'))
+local BaseStore = lib.class('BaseStore', require('@model.shared.base_container'))
 
 ---@type table<string, boolean>
 local DEFAULT_RECORD_METHODS = {
@@ -53,19 +53,19 @@ local DEFAULT_RECORD_METHODS = {
 ---@type table<string, fun(): table>
 local featureLoaders = {
     db = function()
-        return require('@lm_model.imports.features.db')
+        return require('@model.imports.features.db')
     end,
     invoker = function()
-        return require('@lm_model.imports.features.invoker')
+        return require('@model.imports.features.invoker')
     end,
     subscriptions = function()
-        return require('@lm_model.imports.features.subscriptions')
+        return require('@model.imports.features.subscriptions')
     end,
     sync = function()
-        return require('@lm_model.imports.features.sync')
+        return require('@model.imports.features.sync')
     end,
     client_requests = function()
-        return require('@lm_model.imports.features.client_requests')
+        return require('@model.imports.features.client_requests')
     end,
 }
 

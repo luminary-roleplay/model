@@ -21,17 +21,17 @@ Local events are scoped with `:local` to avoid collisions with net events. All e
 
 ```lua
 -- fxmanifest.lua
-dependency 'lm_model'
+dependency 'model'
 ```
 
-Load modules in code with `require(...)`, e.g. `local ClientState = require('@lm_model.client.state')`.
+Load modules in code with `require(...)`, e.g. `local ClientState = require('@model.client.state')`.
 
 ---
 
 ## Owner — `ClientState.register(config)`
 
 ```lua
-local ClientState = require('@lm_model.client.state')
+local ClientState = require('@model.client.state')
 
 local playerState = ClientState.register({
     -- Unique identifier for this state bus.
@@ -71,7 +71,7 @@ When a mirror asks for a sync (`requestSync` event), the owner responds with a f
 ## Mirror — `ClientState.connect(config)`
 
 ```lua
-local ClientState = require('@lm_model.client.state')
+local ClientState = require('@model.client.state')
 
 local playerMirror = ClientState.connect({
     -- Must match the owner's eventName.
@@ -125,7 +125,7 @@ Mirrors filter events by `ownerResource` to ensure they only react to their desi
 
 ```lua
 -- client/hud_state.lua  (owner)
-local ClientState = require('@lm_model.client.state')
+local ClientState = require('@model.client.state')
 
 local hudState = ClientState.register({ eventName = 'hudState' })
 
@@ -138,7 +138,7 @@ hudState:update('money', { value = 5000 })
 
 ```lua
 -- client/nui_bridge.lua  (mirror in the same resource)
-local ClientState = require('@lm_model.client.state')
+local ClientState = require('@model.client.state')
 
 local hud = ClientState.connect({
     eventName = 'hudState',

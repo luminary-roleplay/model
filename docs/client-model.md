@@ -10,17 +10,17 @@ It also provides helpers to fire requests at the server via the [`client_request
 
 ```lua
 -- fxmanifest.lua  (the resource that uses the client model)
-dependency 'lm_model'
+dependency 'model'
 ```
 
-Load modules in code with `require(...)`, e.g. `local ClientModel = require('@lm_model.client.model')`.
+Load modules in code with `require(...)`, e.g. `local ClientModel = require('@model.client.model')`.
 
 ---
 
 ## `ClientModel.connect(config)`
 
 ```lua
-local ClientModel = require('@lm_model.client.model')
+local ClientModel = require('@model.client.model')
 
 local vehicles = ClientModel.connect({
     -- Name of the registered model (must match the server owner's config.name).
@@ -109,7 +109,7 @@ vehicles:unsubscribe()
 Extend the base `ClientStateRecord` to attach helpers to individual records:
 
 ```lua
-local ClientRecord = require('@lm_model.client.record')
+local ClientRecord = require('@model.client.record')
 
 ---@class MyVehicleRecord: ClientRecord
 local MyVehicleRecord = lib.class('MyVehicleRecord', ClientRecord)

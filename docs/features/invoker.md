@@ -56,7 +56,7 @@ Instead of calling raw exports, consuming resources can use the `Proxy` helper w
 
 ```lua
 -- consuming_resource/server/vehicles.lua
-local Proxy = require('@lm_model.imports.proxy')
+local Proxy = require('@model.imports.proxy')
 
 local vehicles = Proxy('owner_resource', 'Vehicles')  -- note: capitalised prefix
 
@@ -91,10 +91,10 @@ Default record methods include: `constructor`, `get`, `setData`, `setDataMany`, 
 ## Full example (owner resource)
 
 ```lua
-local Model = require('@lm_model.imports.model')
+local Model = require('@model.imports.model')
 
 ---@class VehicleRecord: ModelRecord
-local VehicleRecord = lib.class('VehicleRecord', require('@lm_model.imports.model').Record)
+local VehicleRecord = lib.class('VehicleRecord', require('@model.imports.model').Record)
 
 function VehicleRecord:lock()
     return self:setState('locked', true)
@@ -119,7 +119,7 @@ local Vehicles = Model.register({
 
 ```lua
 -- another_resource/server/main.lua
-local Proxy = require('@lm_model.imports.proxy')
+local Proxy = require('@model.imports.proxy')
 local vehicles = Proxy('owner_resource', 'Vehicles')
 
 vehicles:record(vehicleId):lock()

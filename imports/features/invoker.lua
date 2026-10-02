@@ -1,4 +1,4 @@
-local Model = require('@lm_model.imports.model')
+local Model = require('@model.imports.model')
 
 ---@class InvokerFeatureOptions
 ---@field allowedStoreMethods table<string, boolean>

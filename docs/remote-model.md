@@ -15,17 +15,17 @@ Both modes can be combined in a single connection.
 
 ```lua
 -- fxmanifest.lua  (consuming resource)
-dependency 'lm_model'
+dependency 'model'
 ```
 
-Load modules in code with `require(...)`, e.g. `local RemoteModel = require('@lm_model.imports.remote_model')`.
+Load modules in code with `require(...)`, e.g. `local RemoteModel = require('@model.imports.remote_model')`.
 
 ---
 
 ## `RemoteModel.connect(config)`
 
 ```lua
-local RemoteModel = require('@lm_model.imports.remote_model')
+local RemoteModel = require('@model.imports.remote_model')
 
 local vehicles = RemoteModel.connect({
     -- Registered model name (must match config.name in the owner resource).
@@ -130,7 +130,7 @@ owner fires:  '{eventName}:delete'      → mirror removes record
 
 ```lua
 -- owner_resource/server/vehicles.lua
-local Model = require('@lm_model.imports.model')
+local Model = require('@model.imports.model')
 
 local Vehicles = Model.register({
     name       = 'vehicles',
@@ -151,7 +151,7 @@ local Vehicles = Model.register({
 
 ```lua
 -- hud_resource/server/main.lua
-local RemoteModel = require('@lm_model.imports.remote_model')
+local RemoteModel = require('@model.imports.remote_model')
 
 local vehicles = RemoteModel.connect({
     model    = 'vehicles',

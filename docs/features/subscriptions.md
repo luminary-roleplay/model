@@ -73,7 +73,7 @@ A garage management UI where **any number of mechanics** can have the panel open
 
 ```lua
 -- garage_resource/server/main.lua
-local Model = require('@lm_model.imports.model')
+local Model = require('@model.imports.model')
 
 local Vehicles = Model.register({
     name       = 'vehicles',
@@ -109,7 +109,7 @@ Not needed for client UIs — use `ClientModel` directly on the client side.
 
 ```lua
 -- garage_resource/client/ui.lua
-local ClientModel = require('@lm_model.client.model')
+local ClientModel = require('@model.client.model')
 
 local vehicles = ClientModel.connect({
     model    = 'vehicles',

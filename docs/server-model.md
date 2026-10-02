@@ -6,10 +6,10 @@ A server-side model is a store of `ModelRecord` instances living in one authorit
 
 ```lua
 -- fxmanifest.lua
-dependency 'lm_model'
+dependency 'model'
 ```
 
-Load modules in code with `require(...)`, e.g. `local Model = require('@lm_model.imports.model')`.
+Load modules in code with `require(...)`, e.g. `local Model = require('@model.imports.model')`.
 
 ---
 
@@ -190,7 +190,7 @@ hooks = {
 ## Extending with custom classes
 
 ```lua
-local Model = require('@lm_model.imports.model')
+local Model = require('@model.imports.model')
 
 ---@class VehicleRecord: ModelRecord
 local VehicleRecord = lib.class('VehicleRecord', Model.Record)

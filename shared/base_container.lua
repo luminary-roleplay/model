@@ -1,4 +1,4 @@
-local SharedUtils = require('@lm_model.shared.utils')
+local SharedUtils = require('@model.shared.utils')
 
 ---@class SharedBaseContainer
 ---@field records table<any, any>

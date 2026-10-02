@@ -1,4 +1,4 @@
-local Db = require('@lm_model.imports.db')
+local Db = require('@model.imports.db')
 
 ---@class DbFeatureOptions
 ---@field selectAll string?

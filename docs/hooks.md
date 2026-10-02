@@ -5,7 +5,7 @@ Hooks let you intercept model lifecycle operations for validation, transformatio
 They are configured on the store via `config.hooks` when calling `Model.define(...)` or `Model.register(...)`.
 
 ```lua
-local Model = require('@lm_model.imports.model')
+local Model = require('@model.imports.model')
 
 local Vehicles = Model.register({
     name = 'vehicles',

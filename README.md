@@ -1,4 +1,4 @@
-# lm_model
+# model
 
 A standalone, modular data-model library for FiveM/RedM. It provides a structured, server-authoritative store of typed records with optional persistence, cross-resource synchronisation, and client mirroring — all wired together through a central registry.
 
@@ -9,36 +9,36 @@ A standalone, modular data-model library for FiveM/RedM. It provides a structure
 | Requirement | Required |
 |---|---|
 | `ox_lib` | Yes |
-| `lm_postgres` | Must be running when using the `db` feature (the `db` module talks to `Postgres.*`/`exports.lm_postgres`, not `oxmysql`) |
+| `postgres` | Must be running when using the `db` feature (the `db` module talks to `Postgres.*`/`exports.postgres`, not `oxmysql`) |
 
 ## Installation
 
-Add `lm_model` to your resource manifest **before** the resource that consumes it:
+Add `model` to your resource manifest **before** the resource that consumes it:
 
 ```lua
 -- fxmanifest.lua (consuming resource)
-dependency 'lm_model'
+dependency 'model'
 ```
 
 Then load modules directly in your Lua code via `require(...)`, for example:
 
 ```lua
-local Model = require('@lm_model.imports.model')
-local Db = require('@lm_model.imports.db')
-local ClientModel = require('@lm_model.client.model')
+local Model = require('@model.imports.model')
+local Db = require('@model.imports.db')
+local ClientModel = require('@model.client.model')
 ```
 
 ### Paged loading for large data sets
 
-`lm_model` ships built-in paging helpers so resources with large stores can avoid sending the entire dataset in a single net transfer.
+`model` ships built-in paging helpers so resources with large stores can avoid sending the entire dataset in a single net transfer.
 
-**Server** — register a paged callback from your store-owner resource (no `require` needed; `registerPagedCallback` is an lm_model export):
+**Server** — register a paged callback from your store-owner resource (no `require` needed; `registerPagedCallback` is an model export):
 
 ```lua
 -- server/vehicles.lua
-exports.lm_model:registerPagedCallback('vehicles:getPage', {
+exports.model:registerPagedCallback('vehicles:getPage', {
     getItems = function(source)
-        return Vehicles:getAllArray()     -- return the full in-memory list; lm_model slices it
+        return Vehicles:getAllArray()     -- return the full in-memory list; model slices it
     end,
     map = function(record, source)
         return record:toPublic()         -- each item must embed the primary key (e.g. { id = ..., ... })
@@ -50,7 +50,7 @@ exports.lm_model:registerPagedCallback('vehicles:getPage', {
 
 ```lua
 -- client/vehicles.lua
-local Paging = require('@lm_model.client.paging')
+local Paging = require('@model.client.paging')
 
 local items, usedPaging = Paging.loadPagedDataset('vehicles:getPage', 150, function(item)
     return item
@@ -60,7 +60,7 @@ end)
 Or use the built-in `resyncPaged()` on a `ClientModelConnection`:
 
 ```lua
-local ClientModel = require('@lm_model.client.model')
+local ClientModel = require('@model.client.model')
 
 local vehicles = ClientModel.connect({ model = 'vehicles', features = { remote = { autoLoad = false } } })
 local records, usedPaging = vehicles:resyncPaged({ primaryKey = 'id', pageSize = 150 })
@@ -71,7 +71,7 @@ local records, usedPaging = vehicles:resyncPaged({ primaryKey = 'id', pageSize =
 
 ```
 ┌────────────────────────────────────────────────────────┐
-│  lm_model (registry)                                   │
+│  model (registry)                                   │
 │  Tracks: name → { owner, eventName, features }        │
 └────────────────────────────────────────────────────────┘
          ▲                              ▲
@@ -96,7 +96,7 @@ local records, usedPaging = vehicles:resyncPaged({ primaryKey = 'id', pageSize =
 
 **ModelRecord** — A single item inside a store. Separates *persisted data* (written to DB, synced) from *runtime state* (in-memory only, also synced).
 
-**Registry** — A small global service running inside `lm_model` itself. Every store that calls `Model.register()` advertises its name, owner, and feature flags so other resources can discover it.
+**Registry** — A small global service running inside `model` itself. Every store that calls `Model.register()` advertises its name, owner, and feature flags so other resources can discover it.
 
 **Features** — Opt-in capabilities attached to a store at creation time:
 
@@ -112,7 +112,7 @@ local records, usedPaging = vehicles:resyncPaged({ primaryKey = 'id', pageSize =
 
 ```lua
 -- server/vehicles.lua  (owner resource)
-local Model = require('@lm_model.imports.model')
+local Model = require('@model.imports.model')
 
 local Vehicles = Model.register({
     name       = 'vehicles',
@@ -144,7 +144,7 @@ local Vehicles = Model.register({
 
 ```lua
 -- client/vehicles.lua
-local ClientModel = require('@lm_model.client.model')
+local ClientModel = require('@model.client.model')
 
 local vehicles = ClientModel.connect({ model = 'vehicles' })
 
