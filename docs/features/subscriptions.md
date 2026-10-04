@@ -1,6 +1,6 @@
 # Feature: subscriptions
 
-Adds fine-grained subscription tracking to a store. It supports **player ID subscriptions** (for synced UIs pushed to multiple clients in real time) and optional **resource subscriptions** (for server-to-server mirrors). When enabled alongside [`sync`](sync.md), only subscribed targets receive updates — nothing is broadcast to players or resources that haven't opted in.
+Adds fine-grained subscription tracking to a store. It supports **player ID subscriptions** (for synced UIs pushed to multiple clients in real time) and optional **resource subscriptions** (for server-to-server mirrors). When enabled alongside [`sync`](sync.md), only subscribed targets receive updates  nothing is broadcast to players or resources that haven't opted in.
 
 > **Requires:** `sync` feature must also be enabled.
 
@@ -8,7 +8,7 @@ Adds fine-grained subscription tracking to a store. It supports **player ID subs
 
 ## Why use this?
 
-Without subscriptions, every record change is broadcast to **all connected clients** — wasteful and potentially a security issue if some data should only be seen by certain players.
+Without subscriptions, every record change is broadcast to **all connected clients**  wasteful and potentially a security issue if some data should only be seen by certain players.
 
 With player subscriptions you can:
 
@@ -69,7 +69,7 @@ Client closes UI
 
 A garage management UI where **any number of mechanics** can have the panel open at once and all see live vehicle status updates.
 
-### Owner resource — server
+### Owner resource  server
 
 ```lua
 -- garage_resource/server/main.lua
@@ -91,7 +91,7 @@ local Vehicles = Model.register({
     },
 })
 
--- A mechanic claims a job — update status for everyone watching
+-- A mechanic claims a job  update status for everyone watching
 RegisterNetEvent('garage:claimJob', function(vehicleId)
     local record = Vehicles:record(vehicleId)
     if not record then return end
@@ -101,11 +101,11 @@ RegisterNetEvent('garage:claimJob', function(vehicleId)
 end)
 ```
 
-### Consuming resource — server (optional, for a separate HUD resource)
+### Consuming resource  server (optional, for a separate HUD resource)
 
-Not needed for client UIs — use `ClientModel` directly on the client side.
+Not needed for client UIs  use `ClientModel` directly on the client side.
 
-### Consuming resource — client
+### Consuming resource  client
 
 ```lua
 -- garage_resource/client/ui.lua
@@ -118,7 +118,7 @@ local vehicles = ClientModel.connect({
 
 -- Called when the mechanic opens the garage panel
 local function openGarageUI()
-    -- Subscribe to all vehicles — server sends current snapshot via create events,
+    -- Subscribe to all vehicles  server sends current snapshot via create events,
     -- then pushes diffs for every subsequent change to any subscribed player.
     vehicles:subscribe()
 
@@ -135,7 +135,7 @@ local function closeGarageUI()
     vehicles:unsubscribe()   -- server stops sending updates to this player
 end
 
--- React to live updates — re-render only when something actually changes
+-- React to live updates  re-render only when something actually changes
 AddEventHandler('vehicles:updateData', function(id, diff)
     -- The ClientModel has already applied the diff to its mirror.
     -- Just push the updated record to the UI.
@@ -153,7 +153,7 @@ end)
 
 Multiple mechanics can have the panel open simultaneously. Each has their own subscription; the server sends `updateData` to all of them independently whenever any vehicle changes.
 
-### Narrow subscription — single record
+### Narrow subscription  single record
 
 If the player only cares about one vehicle (e.g. a status tracker for their own car):
 
@@ -283,4 +283,4 @@ When `subscriptions` is active the [`sync`](sync.md) feature resolves targets be
 | Server → clients | `store:getSubscribedPlayers(id)` |
 | Server → resources | `store:getSubscribedResources(id)` |
 
-If no players (or resources) are subscribed for a record, no event is fired at all — zero wasted network traffic.
+If no players (or resources) are subscribed for a record, no event is fired at all  zero wasted network traffic.

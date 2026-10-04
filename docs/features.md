@@ -44,7 +44,7 @@ Use:
 
 ## Full worked example
 
-- [DB-persisted, live-synced zones](examples/zones.md) — combines `db`, `sync`, `client_requests`, and `hooks` for a real server-authoritative-area feature, with a working copy of the resource in this project.
+- [DB-persisted, live-synced zones](examples/zones.md)  combines `db`, `sync`, `client_requests`, and `hooks` for a real server-authoritative-area feature, with a working copy of the resource in this project.
 
 ## Notes
 
