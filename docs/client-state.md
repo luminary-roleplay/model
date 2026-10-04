@@ -1,6 +1,6 @@
 # Client State
 
-`ClientState` is a **pure client-side** local state system — no server involvement whatsoever. It allows one client script (the *owner*) to maintain a keyed collection of records and other client scripts in the same resource (or different resources) to mirror those records through local events.
+`ClientState` is a **pure client-side** local state system  no server involvement whatsoever. It allows one client script (the *owner*) to maintain a keyed collection of records and other client scripts in the same resource (or different resources) to mirror those records through local events.
 
 This is useful for things like NUI state, per-player UI data, or any ephemeral client-side collection that multiple scripts need to observe.
 
@@ -28,7 +28,7 @@ Load modules in code with `require(...)`, e.g. `local ClientState = require('@mo
 
 ---
 
-## Owner — `ClientState.register(config)`
+## Owner  `ClientState.register(config)`
 
 ```lua
 local ClientState = require('@model.client.state')
@@ -68,7 +68,7 @@ When a mirror asks for a sync (`requestSync` event), the owner responds with a f
 
 ---
 
-## Mirror — `ClientState.connect(config)`
+## Mirror  `ClientState.connect(config)`
 
 ```lua
 local ClientState = require('@model.client.state')
@@ -94,7 +94,7 @@ local playerMirror = ClientState.connect({
 
 ### Mirror methods
 
-Mirrors are read-only — they receive the owner's changes but cannot push updates.
+Mirrors are read-only  they receive the owner's changes but cannot push updates.
 
 ```lua
 playerMirror:get('health')    -- returns public data or nil

@@ -30,7 +30,7 @@ features = {
 }
 ```
 
-`invoker = true` is **not** valid — you must always supply the allowlists.
+`invoker = true` is **not** valid  you must always supply the allowlists.
 
 ---
 

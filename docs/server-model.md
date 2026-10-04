@@ -17,7 +17,7 @@ Load modules in code with `require(...)`, e.g. `local Model = require('@model.im
 
 | Function | Registry entry | Use when |
 |---|---|---|
-| `Model.register(config)` | Yes — advertises the model globally | Your resource owns the data |
+| `Model.register(config)` | Yes  advertises the model globally | Your resource owns the data |
 | `Model.define(config)` | No | Internal/private stores not consumed by other resources |
 
 Both return a `BaseStore` and attach all requested features.
@@ -122,7 +122,7 @@ Every change fires a local server event you can listen to in the same resource:
 ## `ModelRecord` API
 
 ```lua
--- Read a field — checks runtime state first, then persisted data.
+-- Read a field  checks runtime state first, then persisted data.
 record:get(key)
 
 -- Write one persisted field. Returns (true) or (false, errorString).
@@ -145,10 +145,10 @@ record:save(context?)
 record:toPublic(context?)
 ```
 
-`record.data` — the raw persisted data table.
-`record.state` — the raw runtime-only state table.
-`record.id` — the primary key value.
-`record.version` — auto-incrementing integer, bumped on every `setData` call.
+`record.data`  the raw persisted data table.
+`record.state`  the raw runtime-only state table.
+`record.id`  the primary key value.
+`record.version`  auto-incrementing integer, bumped on every `setData` call.
 
 ---
 
@@ -215,6 +215,6 @@ Likewise, extend `Model.BaseStore` to add custom store-level methods.
 
 > **Do not define `__index` or `__newindex` on your custom class.**
 >
-> `lib.class` sets these metamethods internally for method dispatch and field assignment. Assigning `MyRecord.__index = function(...)` or `MyRecord.__newindex = function(...)` directly on a subclass **replaces** the library's handlers and will break things silently — methods may stop resolving, `self.field = value` assignments may be lost, or you may get infinite loops.
+> `lib.class` sets these metamethods internally for method dispatch and field assignment. Assigning `MyRecord.__index = function(...)` or `MyRecord.__newindex = function(...)` directly on a subclass **replaces** the library's handlers and will break things silently  methods may stop resolving, `self.field = value` assignments may be lost, or you may get infinite loops.
 >
 > Add behaviour by defining normal methods with the `:method()` syntax. If you need to intercept a field write inside a custom accessor, use `rawset(self, key, value)` instead of `self[key] = value`.

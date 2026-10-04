@@ -1,6 +1,6 @@
 # Feature: sync
 
-Broadcasts record changes to other server resources (via local events) and/or to all connected clients (via `TriggerClientEvent`). Any resource that holds a mirror — either through [RemoteModel](../remote-model.md) or [ClientModel](../client-model.md) — receives live diffs automatically.
+Broadcasts record changes to other server resources (via local events) and/or to all connected clients (via `TriggerClientEvent`). Any resource that holds a mirror  either through [RemoteModel](../remote-model.md) or [ClientModel](../client-model.md)  receives live diffs automatically.
 
 ---
 

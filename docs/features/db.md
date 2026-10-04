@@ -2,7 +2,7 @@
 
 Automatically persists records to Postgres via **postgres**. The feature hooks into `create` and `delete` to run INSERT / soft-delete queries immediately, and flushes dirty records on a background timer.
 
-> The adapter (`imports/db.lua`) talks to `Postgres.*`/`exports.postgres`, **not** `oxmysql` — despite the oxmysql-shaped method names (`query`, `single`, `insert`, ...), which `postgres` mirrors for familiarity.
+> The adapter (`imports/db.lua`) talks to `Postgres.*`/`exports.postgres`, **not** `oxmysql`  despite the oxmysql-shaped method names (`query`, `single`, `insert`, ...), which `postgres` mirrors for familiarity.
 
 ## Manifest setup
 
@@ -16,7 +16,7 @@ server_scripts {
 }
 ```
 
-`postgres` must be running when you use this feature (declare it as a `dependency`, not just present in `server.cfg` — the adapter checks resource metadata and falls back to a slower `exports` call with a startup warning if you don't). Load the module in Lua with `local Db = require('@model.imports.db')`.
+`postgres` must be running when you use this feature (declare it as a `dependency`, not just present in `server.cfg`  the adapter checks resource metadata and falls back to a slower `exports` call with a startup warning if you don't). Load the module in Lua with `local Db = require('@model.imports.db')`.
 
 ---
 
@@ -56,7 +56,7 @@ All SQL path fields are optional. Omit `insert` to skip DB writes on create (use
 
 ## SQL file conventions
 
-SQL files are loaded with `LoadResourceFile` from the owning resource. Use `@name` named placeholders — `postgres` converts them internally (see `src/utils/convertNamedPlaceholders.ts`), matched against the keys of the `params` table you pass (i.e. `config.serialize(record.data)`'s output).
+SQL files are loaded with `LoadResourceFile` from the owning resource. Use `@name` named placeholders  `postgres` converts them internally (see `src/utils/convertNamedPlaceholders.ts`), matched against the keys of the `params` table you pass (i.e. `config.serialize(record.data)`'s output).
 
 **select_all.sql**
 ```sql
@@ -70,7 +70,7 @@ VALUES (@plate, @owner, @color)
 RETURNING id
 ```
 
-> **`RETURNING <primaryKey>` is required**, not optional, if you want auto-increment IDs to work (see below). Unlike MySQL, Postgres has no implicit "last insert id" — `Db.insert` / `Db.insertFile` read it from the first column of the first returned row, which only exists if the query has a `RETURNING` clause.
+> **`RETURNING <primaryKey>` is required**, not optional, if you want auto-increment IDs to work (see below). Unlike MySQL, Postgres has no implicit "last insert id"  `Db.insert` / `Db.insertFile` read it from the first column of the first returned row, which only exists if the query has a `RETURNING` clause.
 
 **update.sql**
 ```sql
@@ -90,7 +90,7 @@ The parameters passed to insert/update come from `config.serialize(record.data)`
 
 ## Auto-increment primary keys
 
-When `insert` is configured (with a `RETURNING <primaryKey>` clause — see above) and the record's primary key field is `nil` at create time, the feature assigns the returned auto-increment ID automatically:
+When `insert` is configured (with a `RETURNING <primaryKey>` clause  see above) and the record's primary key field is `nil` at create time, the feature assigns the returned auto-increment ID automatically:
 
 ```lua
 local record = store:create({ plate = 'ABC123', owner = 'steam:...' })

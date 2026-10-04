@@ -1,6 +1,6 @@
 # model
 
-A standalone, modular data-model library for FiveM/RedM. It provides a structured, server-authoritative store of typed records with optional persistence, cross-resource synchronisation, and client mirroring — all wired together through a central registry.
+A standalone, modular data-model library for FiveM/RedM. It provides a structured, server-authoritative store of typed records with optional persistence, cross-resource synchronisation, and client mirroring  all wired together through a central registry.
 
 > **This library is intended for experienced Lua and FiveM/RedM developers.** It assumes a solid understanding of the FiveM/RedM resource system, server/client boundaries, net events, exports, and `ox_lib`. Issues asking for general scripting help or "how do I use Lua" will be closed without response. If you are just getting started with FiveM/RedM development, this is not the right starting point.
 
@@ -32,7 +32,7 @@ local ClientModel = require('@model.client.model')
 
 `model` ships built-in paging helpers so resources with large stores can avoid sending the entire dataset in a single net transfer.
 
-**Server** — register a paged callback from your store-owner resource (no `require` needed; `registerPagedCallback` is an model export):
+**Server**  register a paged callback from your store-owner resource (no `require` needed; `registerPagedCallback` is an model export):
 
 ```lua
 -- server/vehicles.lua
@@ -46,7 +46,7 @@ exports.model:registerPagedCallback('vehicles:getPage', {
 })
 ```
 
-**Client** — either use the standalone paging loader:
+**Client**  either use the standalone paging loader:
 
 ```lua
 -- client/vehicles.lua
@@ -92,13 +92,13 @@ local records, usedPaging = vehicles:resyncPaged({ primaryKey = 'id', pageSize =
 └─────────────────────────┘
 ```
 
-**BaseStore** — Lives in the owning server resource. Holds all `ModelRecord` instances in memory, fires local change events, and drives optional features.
+**BaseStore**  Lives in the owning server resource. Holds all `ModelRecord` instances in memory, fires local change events, and drives optional features.
 
-**ModelRecord** — A single item inside a store. Separates *persisted data* (written to DB, synced) from *runtime state* (in-memory only, also synced).
+**ModelRecord**  A single item inside a store. Separates *persisted data* (written to DB, synced) from *runtime state* (in-memory only, also synced).
 
-**Registry** — A small global service running inside `model` itself. Every store that calls `Model.register()` advertises its name, owner, and feature flags so other resources can discover it.
+**Registry**  A small global service running inside `model` itself. Every store that calls `Model.register()` advertises its name, owner, and feature flags so other resources can discover it.
 
-**Features** — Opt-in capabilities attached to a store at creation time:
+**Features**  Opt-in capabilities attached to a store at creation time:
 
 | Feature | Summary |
 |---|---|
@@ -155,14 +155,14 @@ local vehicles = ClientModel.connect({ model = 'vehicles' })
 
 ## Documentation
 
-- [Features Overview](docs/features.md) — High-level guide to feature roles and common stacks
-- [Server Model](docs/server-model.md) — `BaseStore`, `ModelRecord`, hooks, `define` vs `register`
-- [Hooks](docs/hooks.md) — Lifecycle hook reference, return semantics, and examples
-- [Client Model](docs/client-model.md) — `ClientModel.connect`, mirroring, client requests
-- [Remote Model](docs/remote-model.md) — Server-to-server proxy and mirror via `RemoteModel.connect`
-- [Client State](docs/client-state.md) — Pure client-side local state (no server involvement)
+- [Features Overview](docs/features.md)  High-level guide to feature roles and common stacks
+- [Server Model](docs/server-model.md)  `BaseStore`, `ModelRecord`, hooks, `define` vs `register`
+- [Hooks](docs/hooks.md)  Lifecycle hook reference, return semantics, and examples
+- [Client Model](docs/client-model.md)  `ClientModel.connect`, mirroring, client requests
+- [Remote Model](docs/remote-model.md)  Server-to-server proxy and mirror via `RemoteModel.connect`
+- [Client State](docs/client-state.md)  Pure client-side local state (no server involvement)
 - **Examples**
-  - [DB-persisted, live-synced zones](docs/examples/zones.md) — full worked example combining `db` + `sync` + `client_requests` + `hooks`
+  - [DB-persisted, live-synced zones](docs/examples/zones.md)  full worked example combining `db` + `sync` + `client_requests` + `hooks`
 - **Features**
   - [db](docs/features/db.md)
   - [sync](docs/features/sync.md)
@@ -174,8 +174,8 @@ local vehicles = ClientModel.connect({ model = 'vehicles' })
 
 This library is built on **ox_lib**, the excellent FiveM/RedM utility library that powers the class system, callbacks, and much of the ergonomic foundation here.
 
-- **[Overextended/ox_lib](https://github.com/overextended/ox_lib)** — The original library
-- **[CommunityOx/ox_lib](https://github.com/CommunityOx/ox_lib)** — The active community fork with ongoing updates (recommended)
+- **[Overextended/ox_lib](https://github.com/overextended/ox_lib)**  The original library
+- **[CommunityOx/ox_lib](https://github.com/CommunityOx/ox_lib)**  The active community fork with ongoing updates (recommended)
 
 If you're setting up a new server, use the CommunityOx version.
 

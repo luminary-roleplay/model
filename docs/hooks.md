@@ -40,10 +40,10 @@ local Vehicles = Model.register({
 
 `context` is optional and passed through from the caller. For client-driven actions (via `client_requests`), context includes fields like:
 
-- `source` — player server ID
-- `requestType` — request source (`client_store` / `client_record`)
-- `model` — model name
-- `id` — record ID (record requests)
+- `source`  player server ID
+- `requestType`  request source (`client_store` / `client_record`)
+- `model`  model name
+- `id`  record ID (record requests)
 
 You can use this to enforce permissions in hooks.
 

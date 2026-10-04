@@ -137,7 +137,7 @@ if record and record:isLocked() then ... end
 
 > **Do not define `__index` or `__newindex` on your custom record class.**
 >
-> `lib.class` controls these metamethods internally. Overriding them on a subclass breaks method dispatch and field assignment. Define all behaviour as normal `:method()` functions. If you need to write directly to the instance table (e.g. when caching a result inside `__index`), use `rawset(self, key, value)` — never `self[key] = value`.
+> `lib.class` controls these metamethods internally. Overriding them on a subclass breaks method dispatch and field assignment. Define all behaviour as normal `:method()` functions. If you need to write directly to the instance table (e.g. when caching a result inside `__index`), use `rawset(self, key, value)`  never `self[key] = value`.
 
 ---
 
@@ -164,4 +164,4 @@ resync()
   └─ records cleared, snapshot reloaded
 ```
 
-The version field in `updateData` diffs is used to skip out-of-order packets — if the incoming `version` is lower than what is already stored, the diff is discarded.
+The version field in `updateData` diffs is used to skip out-of-order packets  if the incoming `version` is lower than what is already stored, the diff is discarded.
