@@ -174,7 +174,7 @@ That's the entire feature-side integration: no SQL files, no manual sync wiring,
 
 ## ox_lib for zones, `utils` for UI
 
-This library draws the line deliberately: `client/shapes.lua` still builds real `lib.zones.poly/box/sphere` objects for containment/enter/exit detection  there's no reason to reinvent that, ox_lib's zone system is solid. What it *doesn't* use ox_lib for is UI: notifications (`utils.notify` instead of `lib.notify`) and menus (`utils.registerContext`/`utils.showContext` instead of `lib.registerContext`/`lib.showContext`), plus the admin zone-placement flow rides `utils.creator.startZone`  the project's own visual placement tool  rather than a hand-rolled point-capture command loop. Worth internalizing as a general pattern: "don't use library X" rarely means *none* of X, it means whichever *slice* of X the request was actually about  here, UI surface, not the geometry engine underneath it.
+This library draws the line deliberately: `client/shapes.lua` still builds real `lib.zones.poly/box/sphere` objects for containment/enter/exit detection  there's no reason to reinvent that, ox_lib's zone system is solid. What it *doesn't* use ox_lib for is UI: notifications (`utils.notify` instead of `lib.notify`) and menus (`utils.registerContext`/`utils.showContext`, plus the admin zone-placement flow rides `utils.creator.startZone`  the project's own visual placement tool  rather than a hand-rolled point-capture command loop. Worth internalizing as a general pattern: "don't use library X" rarely means *none* of X, it means whichever *slice* of X the request was actually about  here, UI surface, not the geometry engine underneath it.
 
 ## Where this generalizes
 
